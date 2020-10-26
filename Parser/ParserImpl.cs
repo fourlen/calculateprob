@@ -120,7 +120,7 @@ namespace CalcCS.Parser
             ParserImpl.SkipSpaces(source, ref pos);
             if (pos == source.Length) return left;
 
-            if (source[pos] == '*' || source[pos] == '/')
+            if (source[pos] == '*' || source[pos] == '/' || source[pos] == '%')
             {
                 char op = source[pos];
                 pos++;
@@ -136,6 +136,7 @@ namespace CalcCS.Parser
                 {
                     case '*': return new MultiplyOperation(left, right);
                     case '/': return new DivideOperation(left, right);
+                    case '%': return new DivideWithResidue(left, right);
                 }
 
                 throw new InvalidOperationException("Invalid parser state");
@@ -221,7 +222,7 @@ namespace CalcCS.Parser
         /// <param name="source">строка с исходным математическим выражением</param>
         /// <param name="pos">текущая позиция (изменяется)</param>
         /// <returns>экземпляр Expression</returns>
-        /// <exception cref="ParserException" />
+        /// <exception cref="ParserException" />}
         public static IExpression Parse(string source, ref int pos)
         {
             int start = pos;
